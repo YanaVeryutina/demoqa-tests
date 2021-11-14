@@ -1,8 +1,8 @@
-package guru.qa;
+package guru.qa.docs;
 
 import org.junit.jupiter.api.*;
 
-public class FirstTest {
+public class JUnit5Examples {
 
     @BeforeAll
     static void beforeAll() {
