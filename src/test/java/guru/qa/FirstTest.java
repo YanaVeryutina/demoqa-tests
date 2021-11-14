@@ -2,8 +2,6 @@ package guru.qa;
 
 import org.junit.jupiter.api.*;
 
-import static com.codeborne.selenide.Selenide.open;
-
 public class FirstTest {
 
     @BeforeAll
