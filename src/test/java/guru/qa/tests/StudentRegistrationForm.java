@@ -1,19 +1,20 @@
 package guru.qa.tests;
 
-
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class PracticeFormTest {
+public class StudentRegistrationForm {
 
     @Test
-    void fillFormTest() {
+    void fillFormTest(){
         open("https://demoqa.com/automation-practice-form");
-        //$("practice-form-wrapper").shouldHave(text("Student Registration Form"));
+        //$(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
 
         $("[id=firstName]").setValue("Yana");
         $("#lastName").setValue("Veryutina");
@@ -30,15 +31,29 @@ public class PracticeFormTest {
         $(".react-datepicker__day react-datepicker__day--006").click();
 
         //$("#subjectsContainer").click();
-        $("#subjectsContainer").setValue("Automation");
+        $("#subjectsInput").setValue("Automation").pressEnter();
         $("[for=hobbies-checkbox-3]").click();
-      //  $("#uploadPicture").uploadFromClasspath("123456.png");
+
+        $("#uploadPicture").uploadFile(new File("src/test/resources/img/123456.png"));
+        $("#uploadPicture").uploadFromClasspath("img/123456.png");
+
         $("#currentAddress").setValue("Something");
 
+        $("#state").click();
+        $("#stateCity-wrapper").$(byText("Haryana")).click();
+        $("#city").click();
+        $("#stateCity-wrapper").$(byText("Karnal")).scrollTo().click();
 
-        $("#currentAddress").setValue("Something");
 
         $("#submit").scrollTo().click();
 
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+        $(".table-responsive").shouldHave(text("Yana Veryutina"), text("test@test.com"));
+        $(".table-responsive").$(byText("Student Name"))
+                .parent().shouldHave(text("Yana Veryutina"));
+
+
     }
-}
+    }
+
+
