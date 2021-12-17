@@ -12,7 +12,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class StudentRegistrationForm {
 
     @Test
-    void fillFormTest(){
+    void fillFormTest() {
         open("https://demoqa.com/automation-practice-form");
         //$(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
 
@@ -28,10 +28,10 @@ public class StudentRegistrationForm {
         //$("#dateOfBirthInput").setValue("06 Jan 1997");
         $(".react-datepicker__month-select").selectOption("January");
         $(".react-datepicker__year-select").selectOption("1997");
-        $(".react-datepicker__day react-datepicker__day--006").click();
+        $(".react-datepicker__day--006:not(.react-datepicker__day--outside-month)").click();
 
         //$("#subjectsContainer").click();
-        $("#subjectsInput").setValue("Automation").pressEnter();
+        $("#subjectsInput").setValue("Automation");
         $("[for=hobbies-checkbox-3]").click();
 
         $("#uploadPicture").uploadFile(new File("src/test/resources/img/123456.png"));
@@ -39,7 +39,7 @@ public class StudentRegistrationForm {
 
         $("#currentAddress").setValue("Something");
 
-        $("#state").click();
+        $("#state").scrollTo().click();
         $("#stateCity-wrapper").$(byText("Haryana")).click();
         $("#city").click();
         $("#stateCity-wrapper").$(byText("Karnal")).scrollTo().click();
@@ -54,6 +54,6 @@ public class StudentRegistrationForm {
 
 
     }
-    }
+}
 
 
