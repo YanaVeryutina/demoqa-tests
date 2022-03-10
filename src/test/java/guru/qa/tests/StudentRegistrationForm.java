@@ -15,7 +15,7 @@ public class StudentRegistrationForm {
     void fillFormTest() {
         open("https://demoqa.com/automation-practice-form");
 
-        $("[id=firstName]").setValue("Yana");
+        $("#firstName").setValue("Yana");
         $("#lastName").setValue("Veryutina");
         $("#userEmail").setValue("test@test.com");
         $("[for=gender-radio-2]").click();
@@ -29,7 +29,7 @@ public class StudentRegistrationForm {
         $(".react-datepicker__day--006:not(.react-datepicker__day--outside-month)").click();
 
 
-        $("#subjectsInput").setValue("Automation");
+        $("#subjectsInput").setValue("Maths").pressEnter();
         $("[for=hobbies-checkbox-3]").click();
 
         $("#uploadPicture").uploadFile(new File("src/test/resources/img/123456.png"));
