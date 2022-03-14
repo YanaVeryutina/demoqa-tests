@@ -14,6 +14,9 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationFormWithPageObjectsTests {
 
+    RegistrationPage registrationPage = new RegistrationPage();
+    String firstName = "Yana";
+
     @BeforeAll
     static void beforeAll() {
         Configuration.baseUrl = "https://demoqa.com";
@@ -21,12 +24,11 @@ public class RegistrationFormWithPageObjectsTests {
     }
 
     @Test
-    void successFillTest(){
-        open("/automation-practice-form");
-        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
-
-       new RegistrationPage().setFirstName("Yana");
-       new RegistrationPage().setLastName("Veryutina");
+    void successFillTest() {
+        registrationPage
+                .openPage()
+                .setFirstName(firstName)
+                .setLastName("Veryutina");
 
         $("#userEmail").setValue("test@test.com");
         $("[for=gender-radio-2]").click();
@@ -54,10 +56,11 @@ public class RegistrationFormWithPageObjectsTests {
         $("#submit").click();
 
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
-        $(".table-responsive").shouldHave(text("Yana Veryutina"), text("test@test.com"));
-        new RegistrationPage().checkForm("Student Name", "Yana Veryutina");
-        new RegistrationPage().checkForm("Student Email", "test@test.com");
-        new RegistrationPage().checkForm("Gender", "Female");
+
+        registrationPage
+                .checkForm("Student Name", firstName + "Veryutina")
+                .checkForm("Student Email", "test@test.com")
+                .checkForm("Gender", "Female");
 
     }
 
