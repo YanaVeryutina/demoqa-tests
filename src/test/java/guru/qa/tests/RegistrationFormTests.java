@@ -8,18 +8,21 @@ import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
-public class StudentRegistrationForm {
+public class RegistrationFormTests {
 
     @BeforeAll
     static void beforeAll() {
+        Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
     }
 
     @Test
-    void fillFormTest() {
-        open("https://demoqa.com/automation-practice-form");
+    void successFillTest(){
+        open("/automation-practice-form");
+        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
 
         $("#firstName").setValue("Yana");
         $("#lastName").setValue("Veryutina");
@@ -41,21 +44,18 @@ public class StudentRegistrationForm {
         $("#uploadPicture").uploadFile(new File("src/test/resources/img/123456.png"));
 
         $("#currentAddress").setValue("Something");
-        $("#close-fixedban").click();
+
         $("#state").scrollTo().click();
-        $("#stateCity-wrapper").$(byText("Haryana")).click();
+        $("#stateCity-wrapper").$(byText("NCR")).click();
         $("#city").click();
-        $("#stateCity-wrapper").$(byText("Karnal")).scrollTo().click();
-
-
-        $("#submit").scrollTo().click();
+        $("#stateCity-wrapper").$(byText("Delhi")).scrollTo().click();
+        $("#submit").click();
 
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
         $(".table-responsive").shouldHave(text("Yana Veryutina"), text("test@test.com"));
         $(".table-responsive").$(byText("Student Name"))
                 .parent().shouldHave(text("Yana Veryutina"));
 
-
     }
-}
 
+}

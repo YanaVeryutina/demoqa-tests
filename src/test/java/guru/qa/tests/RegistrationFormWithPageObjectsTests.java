@@ -3,26 +3,31 @@ package guru.qa.tests;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import pages.RegistrationPage;
 
 import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
-public class StudentRegistrationForm {
+public class RegistrationFormWithPageObjectsTests {
 
     @BeforeAll
     static void beforeAll() {
+        Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
     }
 
     @Test
-    void fillFormTest() {
-        open("https://demoqa.com/automation-practice-form");
+    void successFillTest(){
+        open("/automation-practice-form");
+        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
 
-        $("#firstName").setValue("Yana");
-        $("#lastName").setValue("Veryutina");
+       new RegistrationPage().setFirstName("Yana");
+       new RegistrationPage().setLastName("Veryutina");
+
         $("#userEmail").setValue("test@test.com");
         $("[for=gender-radio-2]").click();
 
@@ -41,21 +46,19 @@ public class StudentRegistrationForm {
         $("#uploadPicture").uploadFile(new File("src/test/resources/img/123456.png"));
 
         $("#currentAddress").setValue("Something");
-        $("#close-fixedban").click();
+
         $("#state").scrollTo().click();
-        $("#stateCity-wrapper").$(byText("Haryana")).click();
+        $("#stateCity-wrapper").$(byText("NCR")).click();
         $("#city").click();
-        $("#stateCity-wrapper").$(byText("Karnal")).scrollTo().click();
-
-
-        $("#submit").scrollTo().click();
+        $("#stateCity-wrapper").$(byText("Delhi")).scrollTo().click();
+        $("#submit").click();
 
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
         $(".table-responsive").shouldHave(text("Yana Veryutina"), text("test@test.com"));
-        $(".table-responsive").$(byText("Student Name"))
-                .parent().shouldHave(text("Yana Veryutina"));
-
+        new RegistrationPage().checkForm("Student Name", "Yana Veryutina");
+        new RegistrationPage().checkForm("Student Email", "test@test.com");
+        new RegistrationPage().checkForm("Gender", "Female");
 
     }
-}
 
+}
