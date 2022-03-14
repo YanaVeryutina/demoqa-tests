@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import pages.components.CalendarComponents;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -8,20 +9,30 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationPage {
+
+    CalendarComponents calendarComponents = new CalendarComponents();
+
+
     //locators
     SelenideElement
             headerTitle = $(".practice-form-wrapper"),
             firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
+            userEmailInput = $("#userEmail"),
+            userNumberInput = $("#userNumber"),
+            genderWapper = $("#genterWrapper"),
+            subjectsInput = $("#subjectsInput"),
+            hobbyWrapper = $("#hobbiesWrapper"),
+    currentAddressInput = $("#currentAddress"),
             resultsTable = $(".table-responsive");
+
 
     //actions
 
     public RegistrationPage openPage() {
         open("/automation-practice-form");
-       headerTitle.shouldHave(text("Student Registration Form"));
-
-    return this;
+        headerTitle.shouldHave(text("Student Registration Form"));
+        return this;
     }
 
     public RegistrationPage setFirstName(String firstName) {
@@ -33,6 +44,42 @@ public class RegistrationPage {
         lastNameInput.setValue(lastName);
         return this;
     }
+
+    public void setUserEmail(String userEmail) {
+        userEmailInput.setValue(userEmail);
+    }
+
+    public RegistrationPage setGenderWrapper(String gender) {
+        genderWapper.$(byText(gender)).click();
+        return this;
+    }
+
+    public RegistrationPage setUserNumber(String userNumber) {
+        userNumberInput.setValue(userNumber);
+        return this;
+    }
+
+    public RegistrationPage setBirthDate(String day, String month, String year) {
+        $("#dateOfBirthInput").click();
+        calendarComponents.setDate(day, month, year);
+        return this;
+    }
+
+    public RegistrationPage setSubject(String subject) {
+        subjectsInput.setValue(subject).pressEnter();
+        return this;
+    }
+
+    public RegistrationPage setHobbiesWrapper(String hobby) {
+        hobbyWrapper.$(byText(hobby)).click();
+        return this;
+    }
+
+    public RegistrationPage setCurrentAddress(String address) {
+       currentAddressInput.setValue(address);
+        return this;
+    }
+
 
     public RegistrationPage checkForm(String fieldName, String value) {
         resultsTable.$(byText(fieldName))
