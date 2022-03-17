@@ -3,6 +3,8 @@ package pages;
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponents;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -23,7 +25,11 @@ public class RegistrationPage {
             genderWapper = $("#genterWrapper"),
             subjectsInput = $("#subjectsInput"),
             hobbyWrapper = $("#hobbiesWrapper"),
-    currentAddressInput = $("#currentAddress"),
+            currentAddressInput = $("#currentAddress"),
+            uploadPictureInput = $("#uploadPicture"),
+            stateWrapper = $("#stateCity-wrapper"),
+            cityWrapper = $("#stateCity-wrapper"),
+            headerOfSubmitForm = $("#example-modal-sizes-title-lg"),
             resultsTable = $(".table-responsive");
 
 
@@ -75,11 +81,37 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage setCurrentAddress(String address) {
-       currentAddressInput.setValue(address);
+    public RegistrationPage setUploadPicture(String picture) {
+        uploadPictureInput.uploadFile(new File(picture));
         return this;
     }
 
+    public RegistrationPage setCurrentAddress(String address) {
+        currentAddressInput.setValue(address);
+        return this;
+    }
+
+    public RegistrationPage setStateWrapper(String state) {
+        $("#state").scrollTo().click();
+        stateWrapper.$(byText(state)).click();
+        return this;
+    }
+
+    public RegistrationPage setCityWrapper(String city) {
+        $("#city").click();
+        cityWrapper.$(byText(city)).scrollTo().click();
+        return this;
+    }
+
+    public RegistrationPage submitForm() {
+        $("#submit").click();
+        return this;
+    }
+
+    public RegistrationPage checkHeaderOfSubmitForm() {
+        headerOfSubmitForm.shouldHave(text("Thanks for submitting the form"));
+        return this;
+    }
 
     public RegistrationPage checkForm(String fieldName, String value) {
         resultsTable.$(byText(fieldName))
