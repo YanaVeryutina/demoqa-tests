@@ -44,10 +44,10 @@ public class RegistrationFormWithPageObjectsTests {
                 .setUploadPicture(picture)
                 .setCurrentAddress(address)
                 .setStateWrapper(state)
-                        .setCityWrapper(city)
+                .setCityWrapper(city)
                 .submitForm()
                 .checkHeaderOfSubmitForm()
-                .checkForm("Student Name", firstName + " " + lastName )
+                .checkForm("Student Name", firstName + " " + lastName)
                 .checkForm("Student Email", userEmail)
                 .checkForm("Gender", gender);
 

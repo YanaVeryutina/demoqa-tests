@@ -66,6 +66,7 @@ public class RegistrationPage {
     }
 
     public RegistrationPage setBirthDate(String day, String month, String year) {
+
         $("#dateOfBirthInput").click();
         calendarComponents.setDate(day, month, year);
         return this;
